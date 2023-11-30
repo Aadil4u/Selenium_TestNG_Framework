@@ -1,10 +1,15 @@
 pipeline {
     agent any
-
+    parameters {
+      string defaultValue: 'testng.xml', name: 'xml_file'
+    }
     stages {
-        stage('Hello') {
+        stage('Run Tests') {
             steps {
-                echo 'Hello World'
+                script {
+                    def xmlFile = params.xml_file
+                    sh "mvn test -DsuiteFile=${xmlFile}"
+                }
             }
         }
     }
