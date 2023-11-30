@@ -1,0 +1,25 @@
+name: Run Tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      xmlFile:
+        description: "Name of the TestNG Xml File"
+        required: true
+        default: 'testng.xml'
+
+jobs:
+  build:
+  
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+    - name: Executing Tests
+      run: mvn clean test-DsuiteFile=${{ inputs.xmlFile }}
