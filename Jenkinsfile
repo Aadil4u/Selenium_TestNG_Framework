@@ -8,9 +8,14 @@ pipeline {
             steps {
                 script {
                     def xmlFile = params.xml_file
-                    sh "mvn test -DsuiteFile=${xmlFile}"
+                    sh "mvn clean test -DsuiteFile=${xmlFile}"
                 }
             }
         }
+    }
+    post {
+      always {
+        junit '**/target/surefire-reports/TEST-*.xml'
+      }
     }
 }
