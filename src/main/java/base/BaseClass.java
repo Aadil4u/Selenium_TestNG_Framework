@@ -12,7 +12,7 @@ public class BaseClass {
 
     @BeforeMethod
     public void setupApplication() {
-        driver = BrowserFactory.startBrowser(ConfigReader.getProperty("browser"), ConfigReader.getProperty("url"));
+        driver = BrowserFactory.startBrowser(ConfigReader.getProperty("browser"), ConfigReader.getProperty("url"), ConfigReader.getProperty("headless"));
     }
 
     @AfterMethod
