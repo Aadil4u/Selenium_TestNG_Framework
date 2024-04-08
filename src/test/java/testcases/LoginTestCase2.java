@@ -5,14 +5,13 @@ import dataProvider.CustomDataProvider;
 import helper.ConfigReader;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.LoginPage;
 
 import static browserFactory.BrowserFactory.getDriver;
 
-public class LoginTestCase extends BaseClass {
+public class LoginTestCase2 extends BaseClass {
 
     @BeforeMethod
     public void setupTest() {

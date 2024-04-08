@@ -9,26 +9,28 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static browserFactory.BrowserFactory.getDriver;
+
 public class Utility {
-    public static void click(WebDriver driver, WebElement element) {
+    public static void click(WebElement element) {
         try {
             element.click();
         } catch (ElementNotInteractableException e) {
             System.out.println("Normal Click Failed Trying Again with Actions Click");
-            Actions act = new Actions(driver);
+            Actions act = new Actions(getDriver());
             act.moveToElement(element).click().build().perform();
         } catch (Exception e) {
             System.out.println("Actions Click Failed Trying Again with JS Click");
-            JavascriptExecutor js = (JavascriptExecutor) driver;
+            JavascriptExecutor js = (JavascriptExecutor) getDriver();
             js.executeScript("arguments[0].click()", element);
         }
     }
 
-    public static Alert waitForAlert(WebDriver driver, int waitTime, int pollingSeconds) {
+    public static Alert waitForAlert(int waitTime, int pollingSeconds) {
         Alert alt = null;
         for (int i = 0; i < waitTime; i++) {
             try {
-                alt = driver.switchTo().alert();
+                alt = getDriver().switchTo().alert();
                 break;
             } catch (NoAlertPresentException e) {
                 System.out.println("Alert is not present waiting for few more seconds");
@@ -46,8 +48,8 @@ public class Utility {
         }
     }
 
-    public static void captureScreenshot(WebDriver driver) {
-        TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
+    public static void captureScreenshot() {
+        TakesScreenshot takesScreenshot = (TakesScreenshot) getDriver();
         File src = takesScreenshot.getScreenshotAs(OutputType.FILE);
         File dest = new File("./screenshots/Screenshot_" + getCurrentDateTime() + ".png");
         try {
@@ -58,8 +60,8 @@ public class Utility {
         }
     }
 
-    public static String captureScreenshotAsBase64(WebDriver driver) {
-        TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
+    public static String captureScreenshotAsBase64() {
+        TakesScreenshot takesScreenshot = (TakesScreenshot) getDriver();
         String src = takesScreenshot.getScreenshotAs(OutputType.BASE64);
         return src;
     }
@@ -79,8 +81,8 @@ public class Utility {
         }
     }
 
-    public static void highlightElement(WebDriver driver, WebElement element) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+    public static void highlightElement(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
         js.executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;')", element);
         waitForSeconds(1);
         js.executeScript("arguments[0].removeAttribute('style')", element);
