@@ -1,6 +1,9 @@
 package browserFactory;
 
+
 import enums.Browsers;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -17,6 +20,7 @@ public class BrowserFactory {
     {
         return Driver.get();
     }
+    private static final Logger Log = LogManager.getLogger(BrowserFactory.class.getName());
 
     public static void createDriver(final Browsers browser, boolean headless) {
         switch (browser) {
@@ -30,10 +34,12 @@ public class BrowserFactory {
                 setupEdgeDriver(headless);
                 break;
         }
+        Log.info("Driver Created Successfully....");
         setupBrowserTimeouts();
     }
 
     public static void setupChromeDriver(boolean headless) {
+        Log.info("Setting up Chrome Driver....");
         ChromeOptions options = new ChromeOptions();
         if (headless) {
             options.addArguments("--headless");
@@ -44,6 +50,7 @@ public class BrowserFactory {
     }
 
     public static void setupFirefoxDriver(boolean headless) {
+        Log.info("Setting up Firefox Driver....");
         FirefoxOptions options = new FirefoxOptions();
         if (headless) {
             options.addArguments("--headless");
@@ -54,6 +61,7 @@ public class BrowserFactory {
     }
 
     public static void setupEdgeDriver(boolean headless) {
+        Log.info("Setting up Edge Driver....");
         EdgeOptions options = new EdgeOptions();
         if (headless) {
             options.addArguments("--headless");
@@ -65,13 +73,14 @@ public class BrowserFactory {
 
     public static void quitDriver () {
         if (null != Driver.get ()) {
-            System.out.println("Closing the driver...");
+            Log.info ("Closing the driver...");
             getDriver ().quit ();
             Driver.remove ();
         }
     }
 
     private static void setupBrowserTimeouts() {
+        Log.info("Setting Browser Timeouts....");
         getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
         getDriver().manage().timeouts().scriptTimeout(Duration.ofSeconds(20));
