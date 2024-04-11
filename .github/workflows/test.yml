@@ -22,4 +22,4 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Executing Tests
-      run: mvn clean test -DsuiteFile=${{ inputs.xmlFile }}
+      run: mvn clean test -DsuiteFile=${{ inputs.xmlFile }} -Dheadless=true -e
