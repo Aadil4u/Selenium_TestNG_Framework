@@ -1,22 +1,23 @@
 package base;
 
 import browserFactory.BrowserFactory;
-import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import helper.ConfigReader;
+import enums.Browsers;
+import org.testng.annotations.*;
 
 public class BaseClass {
 
-    public WebDriver driver;
-
-    @BeforeMethod
-    public void setupApplication() {
-        driver = BrowserFactory.startBrowser(ConfigReader.getProperty("browser"), ConfigReader.getProperty("url"), ConfigReader.getProperty("headless"));
+    @Parameters ({"browser", "headless"})
+    @BeforeClass
+    public void setupApplication(String browser, boolean headless) {
+        try {
+            BrowserFactory.createDriver(Browsers.valueOf(browser.toUpperCase()), headless);
+        } catch (IllegalArgumentException e) {
+            BrowserFactory.createDriver(Browsers.valueOf("CHROME"),false);
+        }
     }
 
-    @AfterMethod
+    @AfterClass(alwaysRun = true)
     public void tearDown() {
-        driver.quit();
+        BrowserFactory.quitDriver();
     }
 }

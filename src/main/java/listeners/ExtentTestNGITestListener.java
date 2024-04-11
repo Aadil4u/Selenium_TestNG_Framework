@@ -9,6 +9,8 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import static browserFactory.BrowserFactory.getDriver;
+
 public class ExtentTestNGITestListener implements ITestListener {
     ExtentReports extent = ExtentManager.getInstance();
 
@@ -25,12 +27,13 @@ public class ExtentTestNGITestListener implements ITestListener {
     }
 
     public synchronized void onTestFailure(ITestResult result) {
-        String screenshot = Utility.captureScreenshotAsBase64(BrowserFactory.getDriver());
+        String screenshot = Utility.captureScreenshotAsBase64();
         parentTest.get().fail("Test Failed " + result.getThrowable().getMessage(), MediaEntityBuilder.createScreenCaptureFromBase64String(screenshot, "Screenshot Of Failed Test").build());
     }
 
     public synchronized void onTestSkipped(ITestResult result) {
-        parentTest.get().skip("Test Skipped");
+        String screenshot = Utility.captureScreenshotAsBase64();
+        parentTest.get().skip("Test Skipped " + result.getThrowable().getMessage(), MediaEntityBuilder.createScreenCaptureFromBase64String(screenshot, "Screenshot Of Failed Test").build());
     }
 
 
