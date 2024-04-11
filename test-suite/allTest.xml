@@ -10,7 +10,7 @@
         <parameter name="headless" value="false" />
         <classes>
             <class name="testcases.LoginTestCase"/>
-            <class name="testcases.LoginTestCase2"/>
+            <class name="testcases.E2ETestCase"/>
         </classes>
     </test>
 </suite>

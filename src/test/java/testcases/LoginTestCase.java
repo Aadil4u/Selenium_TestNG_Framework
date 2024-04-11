@@ -26,18 +26,4 @@ public class LoginTestCase extends BaseClass {
         Assert.assertTrue(homePage.verifyLogoDisplayed());
     }
 
-    @Test(dataProvider = "loginData", dataProviderClass = CustomDataProvider.class)
-    public void validLogin1(String userName, String password) {
-        LoginPage loginPage = new LoginPage();
-        HomePage homePage = loginPage.loginToApplication(userName, password);
-        Assert.assertTrue(homePage.verifyLogoDisplayed());
-    }
-
-    @Test(dataProvider = "loginData", dataProviderClass = CustomDataProvider.class)
-    public void validLogin2(String userName, String password) {
-        LoginPage loginPage = new LoginPage();
-        HomePage homePage = loginPage.loginToApplication(userName, password);
-        Assert.assertTrue(homePage.verifyLogoDisplayed());
-    }
-
 }

@@ -32,7 +32,8 @@ public class ExtentTestNGITestListener implements ITestListener {
     }
 
     public synchronized void onTestSkipped(ITestResult result) {
-        parentTest.get().skip("Test Skipped");
+        String screenshot = Utility.captureScreenshotAsBase64();
+        parentTest.get().skip("Test Skipped " + result.getThrowable().getMessage(), MediaEntityBuilder.createScreenCaptureFromBase64String(screenshot, "Screenshot Of Failed Test").build());
     }
 
 
