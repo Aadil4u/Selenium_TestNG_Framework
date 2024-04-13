@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        maven 'Maven'
+    }
     parameters {
       string defaultValue: 'testng.xml', name: 'xml_file'
     }
