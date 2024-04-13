@@ -8,7 +8,7 @@ pipeline {
             steps {
                 script {
                     def xmlFile = params.xml_file
-                    sh "mvn clean test -DsuiteFile=${xmlFile}"
+                    sh "mvn clean test -DsuiteFile=${xmlFile} -Dheadless=true -e"
                 }
             }
         }
